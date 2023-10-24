@@ -21,6 +21,10 @@ class LoginView extends StatelessWidget {
               icon: AppIcons().githubIcon,
               text: 'Github SignIn',
             ),
+            LogoButton(
+              icon: AppIcons().guestLogo,
+              text: 'LogIn as Guest',
+            ),
           ],
         ),
       ),

@@ -13,7 +13,11 @@ class LogoButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
       onPressed: () {},
-      icon: SvgPicture.asset(icon),
+      icon: SvgPicture.asset(
+        icon,
+        height: 30,
+        width: 30,
+      ),
       label: Text(
         text,
         style: const TextStyle(
