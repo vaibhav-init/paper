@@ -13,6 +13,9 @@ class LogoButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
       onPressed: () {},
+      style: ElevatedButton.styleFrom(
+        fixedSize: const Size(230, 30),
+      ),
       icon: SvgPicture.asset(
         icon,
         height: 30,

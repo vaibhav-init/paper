@@ -1,4 +1,4 @@
-package com.example.paper
+package com.paper.vaibhav.app
 
 import io.flutter.embedding.android.FlutterActivity
 
