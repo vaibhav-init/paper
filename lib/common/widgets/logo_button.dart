@@ -4,7 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 class LogoButton extends StatelessWidget {
   final String icon;
   final String text;
-  LogoButton({
+  const LogoButton({
+    super.key,
     required this.icon,
     required this.text,
   });
