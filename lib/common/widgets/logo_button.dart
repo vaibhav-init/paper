@@ -4,16 +4,18 @@ import 'package:flutter_svg/flutter_svg.dart';
 class LogoButton extends StatelessWidget {
   final String icon;
   final String text;
+  final VoidCallback callback;
   const LogoButton({
     super.key,
     required this.icon,
     required this.text,
+    required this.callback,
   });
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
-      onPressed: () {},
+      onPressed: callback,
       style: ElevatedButton.styleFrom(
         fixedSize: const Size(230, 30),
       ),
