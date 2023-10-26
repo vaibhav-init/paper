@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:paper/common/widgets/logo_button.dart';
-import 'package:paper/constants/common.dart';
+import 'package:paper/constants/constants.dart';
 import 'package:paper/repository/auth_repository.dart';
 
 class LoginView extends ConsumerWidget {

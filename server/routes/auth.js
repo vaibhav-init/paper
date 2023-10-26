@@ -14,17 +14,13 @@ authRouter.post('/api/signup' , async (req , res)=> {
                 profile: profile,
             });
             user = await user.save();
-
-
-
-
         }
         res.json({user});
 
         
     }
     catch(e){
-        console.log(e);
+        res.status(500).json({error: e.message});
     }
 
 });

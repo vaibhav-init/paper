@@ -4,3 +4,9 @@ class AppIcons {
   String documentLogo = 'assets/svgs/document.svg';
   String guestLogo = 'assets/svgs/guest.svg';
 }
+
+String baseUrl = "http://localhost:5000";
+
+class ApiRoutes {
+  String signupRoute = "$baseUrl/api/signup";
+}
