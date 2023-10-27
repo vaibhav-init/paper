@@ -5,7 +5,8 @@ class AppIcons {
   String guestLogo = 'assets/svgs/guest.svg';
 }
 
-String baseUrl = "http://10.0.2.2:5000";
+String emulatorUrl = "10.0.2.2";
+String baseUrl = "http://localhost:5000";
 
 class ApiRoutes {
   String signupRoute = "$baseUrl/api/signup";
