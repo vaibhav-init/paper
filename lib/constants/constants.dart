@@ -1,3 +1,6 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 class AppIcons {
   String googleIcon = 'assets/svgs/google_logo.svg';
   String githubIcon = 'assets/svgs/github.svg';

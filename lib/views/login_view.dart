@@ -3,11 +3,29 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:paper/common/widgets/logo_button.dart';
 import 'package:paper/constants/constants.dart';
 import 'package:paper/repository/auth_repository.dart';
+import 'package:paper/views/home_view.dart';
 
 class LoginView extends ConsumerWidget {
   const LoginView({super.key});
-  void googleLogin(WidgetRef ref) {
-    ref.watch(authRepositoryProvider).signInWithGoogle();
+  void googleLogin(WidgetRef ref, BuildContext context) async {
+    final sMessenger = ScaffoldMessenger.of(context);
+    final navigator = Navigator.of(context);
+    final errorModel =
+        await ref.watch(authRepositoryProvider).signInWithGoogle();
+    if (errorModel.error == null) {
+      ref.read(userProvider.notifier).update((state) => errorModel.data);
+      navigator.push(
+        MaterialPageRoute(
+          builder: (context) => const HomeView(),
+        ),
+      );
+    } else {
+      sMessenger.showSnackBar(
+        SnackBar(
+          content: Text(errorModel.error.toString()),
+        ),
+      );
+    }
   }
 
   @override
@@ -22,7 +40,7 @@ class LoginView extends ConsumerWidget {
               icon: AppIcons().googleIcon,
               text: 'Google SignIn',
               callback: () {
-                googleLogin(ref);
+                googleLogin(ref, context);
               },
             ),
             LogoButton(
