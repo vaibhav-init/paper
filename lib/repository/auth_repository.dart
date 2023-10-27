@@ -32,11 +32,13 @@ class AuthRepository {
     );
     try {
       final user = await _googleSignIn.signIn();
+      print(user!.email);
+      print(user!.displayName);
       if (user != null) {
         final accountHolder = UserModel(
           email: user.email,
           name: user.displayName!,
-          profilePic: user.photoUrl!,
+          profile: user.photoUrl!,
           uid: '',
           token: '',
         );
