@@ -1,9 +1,10 @@
 const express = require('express');
 const User = require('../models/user_model');
-    
 const authRouter = express.Router();
 const jwt = require('jsonwebtoken');
 const auth = require('../middlewares/auth_middleware');
+
+
 
 authRouter.post("/api/signup" , async (req , res)=> {
     try{
@@ -35,7 +36,6 @@ authRouter.post("/api/signup" , async (req , res)=> {
 
 authRouter.get("/" , auth ,  async (req , res)=> {
     const user = await User.findById(req.user);
-    console.log("*CUSTOM TESTING POINT*  " + req.token);
     res.json({ user , token: req.token});
 
 });
