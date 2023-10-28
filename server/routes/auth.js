@@ -22,10 +22,7 @@ authRouter.post('/api/signup' , async (req , res)=> {
             
         }
         const token = jwt.sign({id: user._id}, "password");
-        res.json({user ,token });
-
-
-        
+        res.json({user ,token });        
     }
     catch(e){
         res.status(500).json({error: e.message});
