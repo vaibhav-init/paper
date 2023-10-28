@@ -5,6 +5,11 @@ import 'package:paper/repository/auth_repository.dart';
 class HomeView extends ConsumerWidget {
   const HomeView({super.key});
 
+  void signOut(WidgetRef ref) {
+    ref.read(authRepositoryProvider).signOut();
+    ref.read(userProvider.notifier).update((state) => null);
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
@@ -12,7 +17,15 @@ class HomeView extends ConsumerWidget {
         backgroundColor: Colors.transparent,
         actions: [
           IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
+          IconButton(
+            onPressed: () {
+              signOut(ref);
+            },
+            icon: const Icon(
+              Icons.logout_outlined,
+              color: Colors.red,
+            ),
+          ),
         ],
       ),
       body: Center(
