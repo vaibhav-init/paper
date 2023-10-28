@@ -32,8 +32,6 @@ class AuthRepository {
     );
     try {
       final user = await _googleSignIn.signIn();
-      print(user!.email);
-      print(user!.displayName);
       if (user != null) {
         final accountHolder = UserModel(
           email: user.email,
@@ -50,6 +48,7 @@ class AuthRepository {
           case 200:
             accountHolder.copyWith(
               uid: jsonDecode(res.body)['user']['_id'],
+              token: jsonDecode(res.body)['token'],
             );
             error = ErrorModel(error: null, data: accountHolder);
 
