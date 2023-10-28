@@ -8,6 +8,13 @@ class HomeView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        actions: [
+          IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
+          IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
+        ],
+      ),
       body: Center(
         child: Text(ref.watch(userProvider)!.name),
       ),

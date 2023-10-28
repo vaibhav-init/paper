@@ -3,8 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:paper/constants/routes.dart';
 import 'package:paper/models/error_model.dart';
 import 'package:paper/repository/auth_repository.dart';
-import 'package:paper/views/home_view.dart';
-import 'package:paper/views/login_view.dart';
 import 'package:routemaster/routemaster.dart';
 
 void main() {
@@ -37,7 +35,6 @@ class _MyAppState extends ConsumerState<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    final user = ref.watch(userProvider);
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),

@@ -1,4 +1,4 @@
-//command-> flutter run -d chrome --web-hostname localhost --web-port 3000
+//command-> flutter run -d chrome  --web-port 3000
 import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
