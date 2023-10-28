@@ -1,6 +1,5 @@
 //command-> flutter run -d chrome --web-hostname localhost --web-port 3000
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:paper/constants/constants.dart';
@@ -50,7 +49,6 @@ class AuthRepository {
         var res = await _client.post(Uri.parse(ApiRoutes().signupRoute),
             body: accountHolder.toJson(),
             headers: {'Content-Type': 'application/json; charset=UTF-8'});
-        print(res.body.toString());
         switch (res.statusCode) {
           case 200:
             final newUser = accountHolder.copyWith(
@@ -82,7 +80,7 @@ class AuthRepository {
       String? token = await _localStorage.getToken();
       if (token != null) {
         var res =
-            await _client.get(Uri.parse("http://10.0.2.2:5000/"), headers: {
+            await _client.get(Uri.parse(ApiRoutes().getUserRoute), headers: {
           "Content-Type": "application/json; charset=UTF-8",
           "x-auth-token": token,
         });

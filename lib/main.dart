@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:paper/constants/routes.dart';
 import 'package:paper/models/error_model.dart';
 import 'package:paper/repository/auth_repository.dart';
 import 'package:paper/views/home_view.dart';
 import 'package:paper/views/login_view.dart';
+import 'package:routemaster/routemaster.dart';
 
 void main() {
   runApp(
@@ -28,8 +30,6 @@ class _MyAppState extends ConsumerState<MyApp> {
 
   void getUserData() async {
     errorModel = await ref.read(authRepositoryProvider).getUserData();
-
-    print(errorModel!.error.toString());
     if (errorModel != null && errorModel!.data != null) {
       ref.read(userProvider.notifier).update((state) => errorModel!.data);
     }
@@ -38,11 +38,18 @@ class _MyAppState extends ConsumerState<MyApp> {
   @override
   Widget build(BuildContext context) {
     final user = ref.watch(userProvider);
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
       title: 'Paper App',
-      home: user == null ? const LoginView() : const HomeView(),
+      routeInformationParser: const RoutemasterParser(),
+      routerDelegate: RoutemasterDelegate(routesBuilder: (context) {
+        final user = ref.watch(userProvider);
+        if (user != null && user.token.isNotEmpty) {
+          return loggedInRoutes;
+        }
+        return loggedOutRoutes;
+      }),
     );
   }
 }

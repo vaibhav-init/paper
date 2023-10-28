@@ -6,7 +6,7 @@ class AppIcons {
 }
 
 String emulatorUrl = "10.0.2.2";
-String baseUrl = "http://10.0.2.2:5000";
+String baseUrl = "http://localhost:5000";
 
 class ApiRoutes {
   String signupRoute = "$baseUrl/api/signup";

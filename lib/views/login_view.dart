@@ -3,22 +3,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:paper/common/widgets/logo_button.dart';
 import 'package:paper/constants/constants.dart';
 import 'package:paper/repository/auth_repository.dart';
-import 'package:paper/views/home_view.dart';
+import 'package:routemaster/routemaster.dart';
 
 class LoginView extends ConsumerWidget {
   const LoginView({super.key});
   void googleLogin(WidgetRef ref, BuildContext context) async {
     final sMessenger = ScaffoldMessenger.of(context);
-    final navigator = Navigator.of(context);
+    final navigator = Routemaster.of(context);
     final errorModel =
         await ref.watch(authRepositoryProvider).signInWithGoogle();
     if (errorModel.error == null) {
       ref.read(userProvider.notifier).update((state) => errorModel.data);
-      navigator.push(
-        MaterialPageRoute(
-          builder: (context) => const HomeView(),
-        ),
-      );
+      navigator.push('/');
     } else {
       sMessenger.showSnackBar(
         SnackBar(
