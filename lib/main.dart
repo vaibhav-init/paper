@@ -7,9 +7,7 @@ import 'package:paper/views/login_view.dart';
 
 void main() {
   runApp(
-    const ProviderScope(
-      child: MyApp(),
-    ),
+    const ProviderScope(child: MyApp()),
   );
 }
 
@@ -29,11 +27,10 @@ class _MyAppState extends ConsumerState<MyApp> {
   }
 
   void getUserData() async {
-    print("Getting user data");
     errorModel = await ref.read(authRepositoryProvider).getUserData();
+
     print(errorModel!.error.toString());
     if (errorModel != null && errorModel!.data != null) {
-      print("State notified");
       ref.read(userProvider.notifier).update((state) => errorModel!.data);
     }
   }

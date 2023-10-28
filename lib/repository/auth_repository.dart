@@ -1,5 +1,6 @@
 //command-> flutter run -d chrome --web-hostname localhost --web-port 3000
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:paper/constants/constants.dart';
@@ -37,6 +38,7 @@ class AuthRepository {
     );
     try {
       final user = await _googleSignIn.signIn();
+
       if (user != null) {
         final accountHolder = UserModel(
           email: user.email,
@@ -48,15 +50,16 @@ class AuthRepository {
         var res = await _client.post(Uri.parse(ApiRoutes().signupRoute),
             body: accountHolder.toJson(),
             headers: {'Content-Type': 'application/json; charset=UTF-8'});
-
+        print(res.body.toString());
         switch (res.statusCode) {
           case 200:
-            accountHolder.copyWith(
+            final newUser = accountHolder.copyWith(
               uid: jsonDecode(res.body)['user']['_id'],
               token: jsonDecode(res.body)['token'],
             );
-            error = ErrorModel(error: null, data: accountHolder);
-            _localStorage.setToken(accountHolder.token);
+            error = ErrorModel(error: null, data: newUser);
+
+            _localStorage.setToken(newUser.token);
 
             break;
         }
@@ -72,26 +75,28 @@ class AuthRepository {
 
   Future<ErrorModel> getUserData() async {
     ErrorModel error = ErrorModel(
-      error: 'Something unexpected happened!',
+      error: 'ErrorModel Initialized never used !',
       data: null,
     );
     try {
       String? token = await _localStorage.getToken();
       if (token != null) {
         var res =
-            await _client.get(Uri.parse(ApiRoutes().getUserRoute), headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
-          'x-auth-token': token,
+            await _client.get(Uri.parse("http://10.0.2.2:5000/"), headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+          "x-auth-token": token,
         });
-
         switch (res.statusCode) {
           case 200:
-            final oldAccountHolder = UserModel.fromJson(
-              jsonEncode(jsonDecode(res.body)['user']),
-            ).copyWith(token: token);
-            error = ErrorModel(error: null, data: oldAccountHolder);
-            _localStorage.setToken(oldAccountHolder.token);
-
+            final newUser = UserModel.fromJson(
+              jsonEncode(
+                jsonDecode(res.body)['user'],
+              ),
+            ).copyWith(
+              token: token,
+            );
+            error = ErrorModel(error: null, data: newUser);
+            _localStorage.setToken(newUser.token);
             break;
         }
       }
@@ -102,5 +107,10 @@ class AuthRepository {
       );
     }
     return error;
+  }
+
+  void signOut() async {
+    await _googleSignIn.signOut();
+    _localStorage.setToken('');
   }
 }

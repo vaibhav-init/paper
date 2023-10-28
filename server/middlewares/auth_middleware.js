@@ -2,15 +2,15 @@ const jwt = require('jsonwebtoken');
 const auth = async (req, res , next)=>{
     try{
         const token = req.header("x-auth-token");
-        if(!token){
-            return res.status(401).json({msg: "token null not found !"});
+        if(!token)
+           return res.status(401).json({msg: "token null not found !"});
 
-        }
+        
         const verified = jwt.verify(token, "password");
-        if(!verified){
+        if(!verified)
             return res.status(401).json({msg: "Token verification failed!"});
-        }
-        res.user= verified.id;
+        
+        req.user= verified.id;
         req.token=  token;
         next();
 
