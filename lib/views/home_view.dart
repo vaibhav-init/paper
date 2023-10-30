@@ -24,7 +24,7 @@ class HomeView extends ConsumerWidget {
     } else {
       snackbar.showSnackBar(
         SnackBar(
-          content: Text(errorModel.error!),
+          content: Text("${errorModel.error!} Hello is hai error "),
         ),
       );
     }
@@ -37,14 +37,11 @@ class HomeView extends ConsumerWidget {
         backgroundColor: Colors.transparent,
         actions: [
           IconButton(
-              onPressed: () {
-                createDocument(ref, context);
-              },
-              icon: const Icon(Icons.add)),
+            onPressed: () => createDocument(ref, context),
+            icon: const Icon(Icons.add),
+          ),
           IconButton(
-            onPressed: () {
-              signOut(ref);
-            },
+            onPressed: () => signOut(ref),
             icon: const Icon(
               Icons.logout_outlined,
               color: Colors.red,

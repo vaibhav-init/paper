@@ -22,14 +22,14 @@ class DocRepository {
     );
     try {
       var res = await _client.post(
-        Uri.parse(ApiRoutes().createDocumentRoute),
+        Uri.parse('http://localhost:5000/doc/create'),
         headers: {
           "Content-Type": "application/json; charset=UTF-8",
           "x-auth-token": token,
         },
-        body: jsonEncode(
-          {'createdAt': DateTime.now().microsecondsSinceEpoch},
-        ),
+        body: jsonEncode({
+          'createdAt': DateTime.now().microsecondsSinceEpoch,
+        }),
       );
       switch (res.statusCode) {
         case 200:

@@ -9,7 +9,7 @@ docRouter.post('/doc/create' ,auth , async (req, res)=>{
         const {createdAt}= req.body;
         let document = new Document({
             uid: req.user, 
-            title: 'Untitled Paper',
+            title: "Untitled Paper",
             createdAt,
         });
         document = await document.save();
@@ -18,7 +18,7 @@ docRouter.post('/doc/create' ,auth , async (req, res)=>{
     }
     catch(e){
         res.status(500).json({
-            error: e.message
+            error: e.message + "Backend Error"
         });
 
     }

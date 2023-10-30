@@ -10,6 +10,6 @@ final loggedOutRoutes = RouteMap(routes: {
 final loggedInRoutes = RouteMap(routes: {
   '/': (route) => const MaterialPage(child: HomeView()),
   '/document/:id': (route) => MaterialPage(
-        child: DocumentScreen(id: route.pathParameters['id'] ?? ''),
+        child: DocumentView(id: route.pathParameters['id'] ?? ''),
       ),
 });
