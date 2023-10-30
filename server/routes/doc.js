@@ -27,4 +27,19 @@ docRouter.post('/doc/create' ,auth , async (req, res)=>{
     }
 
 });
+
+docRouter.get('/doc/my' , auth , async(req , res)=> {
+    try{
+        let documents = await Document.find({uid: req.user});
+        res.json(documents);
+
+
+    }catch(e){
+        reitems.status(500).json({
+            error: e.message + "Backend Error"
+        });
+
+    }
+
+});
 module.exports = docRouter; 

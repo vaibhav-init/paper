@@ -31,14 +31,56 @@ class DocRepository {
           'createdAt': DateTime.now().microsecondsSinceEpoch,
         }),
       );
-      print(res.statusCode);
-      print(res.body);
-      print(DocumentModel.fromJson(res.body).toString());
       switch (res.statusCode) {
         case 200:
           error = ErrorModel(
             error: null,
             data: DocumentModel.fromJson(res.body),
+          );
+          break;
+        default:
+          error = ErrorModel(error: res.body, data: null);
+          break;
+      }
+    } catch (e) {
+      error = ErrorModel(
+        error: e.toString(),
+        data: null,
+      );
+    }
+    return error;
+  }
+
+  Future<ErrorModel> getDocuments(String token) async {
+    ErrorModel error = ErrorModel(
+      error: 'Something Unexpected happened :< !',
+      data: null,
+    );
+    try {
+      var res = await _client.get(
+        Uri.parse(ApiRoutes().getDocumentsRoute),
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+          "x-auth-token": token,
+        },
+      );
+      switch (res.statusCode) {
+        case 200:
+          List<DocumentModel> documents = [];
+          for (int i = 0; i < jsonDecode(res.body).length; i++) {
+            print(jsonDecode(res.body).length);
+            documents.add(
+              DocumentModel.fromJson(
+                jsonEncode(
+                  jsonDecode(res.body)[i],
+                ),
+              ),
+            );
+          }
+
+          error = ErrorModel(
+            error: null,
+            data: documents,
           );
           break;
         default:

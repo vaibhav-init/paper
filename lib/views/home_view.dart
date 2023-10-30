@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:paper/common/widgets/loader.dart';
+import 'package:paper/models/document_model.dart';
 import 'package:paper/repository/auth_repository.dart';
 import 'package:paper/repository/doc_repository.dart';
 import 'package:routemaster/routemaster.dart';
@@ -30,6 +32,10 @@ class HomeView extends ConsumerWidget {
     }
   }
 
+  void navigateToDocument(BuildContext context, String documentId) {
+    Routemaster.of(context).push('/document/$documentId');
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
@@ -49,9 +55,36 @@ class HomeView extends ConsumerWidget {
           ),
         ],
       ),
-      body: Center(
-        child: Text(ref.watch(userProvider)!.name),
-      ),
+      body: FutureBuilder(
+          future: ref.watch(docRepositoryProvider).getDocuments(
+                ref.watch(userProvider)!.token,
+              ),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Loader();
+            }
+            return ListView.builder(
+                itemCount: snapshot.data!.data.length,
+                itemBuilder: (context, index) {
+                  DocumentModel document = snapshot.data!.data[index];
+                  return InkWell(
+                    onTap: () => navigateToDocument(
+                      context,
+                      document.id,
+                    ),
+                    child: Card(
+                      child: Center(
+                        child: Text(
+                          document.title,
+                          style: const TextStyle(
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                });
+          }),
     );
   }
 }

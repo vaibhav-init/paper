@@ -14,4 +14,5 @@ class ApiRoutes {
   String signupRoute = "$baseUrl/api/signup";
   String getUserRoute = "$baseUrl/";
   String createDocumentRoute = "$baseUrl/doc/create";
+  String getDocumentsRoute = "$baseUrl/doc/my";
 }
