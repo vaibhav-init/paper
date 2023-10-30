@@ -24,7 +24,7 @@ class HomeView extends ConsumerWidget {
     } else {
       snackbar.showSnackBar(
         SnackBar(
-          content: Text("${errorModel.error!} Hello is hai error "),
+          content: Text(errorModel.error!),
         ),
       );
     }

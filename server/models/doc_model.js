@@ -14,12 +14,12 @@ const docSchema = mongoose.Schema({
         type: String, 
         trim: true
     },
-    contents:{
+    content:{
         type: Array, 
         default: [],
     },
 
 });
-const Document = mongoose.model('Document' , docSchema);
+const Document = mongoose.model("Document" , docSchema);
 
 module.exports = Document;
