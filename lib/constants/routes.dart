@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paper/views/document_view.dart';
 import 'package:paper/views/home_view.dart';
 import 'package:paper/views/login_view.dart';
 import 'package:routemaster/routemaster.dart';
@@ -8,4 +9,7 @@ final loggedOutRoutes = RouteMap(routes: {
 });
 final loggedInRoutes = RouteMap(routes: {
   '/': (route) => const MaterialPage(child: HomeView()),
+  '/document/:id': (route) => MaterialPage(
+        child: DocumentScreen(id: route.pathParameters['id'] ?? ''),
+      ),
 });

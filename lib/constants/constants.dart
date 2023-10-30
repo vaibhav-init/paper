@@ -6,9 +6,12 @@ class AppIcons {
 }
 
 String emulatorUrl = "10.0.2.2";
-String baseUrl = "http://localhost:5000";
+String samsungDebug = "192.168.29.73";
+String localhost = "localhost";
+String baseUrl = "http://$localhost:5000";
 
 class ApiRoutes {
   String signupRoute = "$baseUrl/api/signup";
   String getUserRoute = "$baseUrl/";
+  String createDocumentRoute = "$baseUrl/doc/create";
 }
