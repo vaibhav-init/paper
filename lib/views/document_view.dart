@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,6 +12,7 @@ import 'package:paper/models/error_model.dart';
 import 'package:paper/repository/auth_repository.dart';
 import 'package:paper/repository/doc_repository.dart';
 import 'package:paper/repository/socket_repository.dart';
+import 'package:routemaster/routemaster.dart';
 
 class DocumentView extends ConsumerStatefulWidget {
   final String id;
@@ -105,10 +107,15 @@ class _DocumentViewState extends ConsumerState<DocumentView> {
       appBar: AppBar(
         title: Row(
           children: [
-            SvgPicture.asset(
-              AppIcons().documentLogo,
-              height: 40,
-              width: 30,
+            InkWell(
+              onTap: () {
+                Routemaster.of(context).replace('/');
+              },
+              child: SvgPicture.asset(
+                AppIcons().documentLogo,
+                height: 40,
+                width: 30,
+              ),
             ),
             SizedBox(
               width: 200,
@@ -127,7 +134,17 @@ class _DocumentViewState extends ConsumerState<DocumentView> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Clipboard.setData(ClipboardData(
+                      text: 'http://localhost:3000/#/document/${widget.id}'))
+                  .then((value) => {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Link copied to clipboard'),
+                          ),
+                        ),
+                      });
+            },
             icon: const Icon(Icons.share),
           ),
         ],
