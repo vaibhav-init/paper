@@ -4,6 +4,7 @@ const authRouter = require('./routes/auth');
 const cors = require('cors');
 const docRouter = require('./routes/doc');
 const http = require('http');
+const Document = require("./models/doc_model");
 
 const URL = "mongodb+srv://vaibhav:vaibhav@cluster0.uavseiu.mongodb.net/?retryWrites=true&w=majority";
 const app = express();
@@ -31,8 +32,18 @@ io.on('connection' ,(socket)=> {
         socket.broadcast.to(data.room).emit('changes' , data);
         
     })
+    socket.on('save', (data)=> {
+        saveData(data);
+
+    })
 });
 
+const saveData = async (data)=> {
+    let document= await Document.findById(data.room);
+    document.content= data.delta;
+    document = await document.save();
+
+};
 const PORT = 5000;
 server.listen(PORT, "0.0.0.0", () => {
     console.log(`*.* hey, listening to port ${PORT}`);

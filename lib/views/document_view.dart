@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -47,6 +49,12 @@ class _DocumentViewState extends ConsumerState<DocumentView> {
             ChangeSource.REMOTE,
           )
         });
+    Timer.periodic(const Duration(seconds: 3), (timer) {
+      socketRepository.autoSave(<String, dynamic>{
+        'delta': _controller!.document.toDelta(),
+        'room': widget.id,
+      });
+    });
   }
 
   void getDocumentData() async {
