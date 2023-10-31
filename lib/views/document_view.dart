@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:paper/common/widgets/loader.dart';
 import 'package:paper/constants/constants.dart';
 import 'package:paper/models/document_model.dart';
 import 'package:paper/models/error_model.dart';
 import 'package:paper/repository/auth_repository.dart';
 import 'package:paper/repository/doc_repository.dart';
+import 'package:paper/repository/socket_repository.dart';
 
 class DocumentView extends ConsumerStatefulWidget {
   final String id;
@@ -21,8 +23,9 @@ class DocumentView extends ConsumerStatefulWidget {
 class _DocumentViewState extends ConsumerState<DocumentView> {
   final TextEditingController titleController =
       TextEditingController(text: 'Untitled Paper');
-  final QuillController _controller = QuillController.basic();
+  QuillController? _controller;
   ErrorModel? errorModel;
+  SocketRepository socketRepository = SocketRepository();
 
   void updateTitle(WidgetRef ref, String title) {
     ref.read(docRepositoryProvider).updateTitle(
@@ -35,7 +38,15 @@ class _DocumentViewState extends ConsumerState<DocumentView> {
   @override
   void initState() {
     super.initState();
+    socketRepository.joinRoom(widget.id);
     getDocumentData();
+    socketRepository.changeListener((data) => {
+          _controller?.compose(
+            Delta.fromJson(data['delta']),
+            _controller?.selection ?? const TextSelection.collapsed(offset: 0),
+            ChangeSource.REMOTE,
+          )
+        });
   }
 
   void getDocumentData() async {
@@ -46,21 +57,42 @@ class _DocumentViewState extends ConsumerState<DocumentView> {
 
     if (errorModel!.data != null) {
       titleController.text = (errorModel!.data as DocumentModel).title;
+      _controller = QuillController(
+        document: errorModel!.data.content.isEmpty
+            ? Document()
+            : Document.fromDelta(Delta.fromJson(errorModel!.data.content)),
+        selection: const TextSelection.collapsed(offset: 0),
+      );
       setState(() {});
-    } else {
-      print('errorModel is null ');
     }
+    _controller!.document.changes.listen((event) {
+      //1-> content
+      //2-> changes from previous part
+      //3-> local? we have typed ; remote
+      if (event.source == ChangeSource.LOCAL) {
+        Map<String, dynamic> map = {
+          'delta': event.change,
+          'room': widget.id,
+        };
+        socketRepository.typing(map);
+      }
+    });
   }
 
   @override
   void dispose() {
     super.dispose();
     titleController.dispose();
-    _controller.dispose();
+    _controller?.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (_controller == null) {
+      return const Scaffold(
+        body: Loader(),
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -94,7 +126,7 @@ class _DocumentViewState extends ConsumerState<DocumentView> {
       ),
       body: QuillProvider(
         configurations: QuillConfigurations(
-          controller: _controller,
+          controller: _controller!,
           sharedConfigurations: const QuillSharedConfigurations(
             locale: Locale('de'),
           ),
