@@ -15,4 +15,6 @@ class ApiRoutes {
   String getUserRoute = "$baseUrl/";
   String createDocumentRoute = "$baseUrl/doc/create";
   String getDocumentsRoute = "$baseUrl/doc/my";
+  String updateTitleRoute = "$baseUrl/doc/update/title";
+  String documentByIdRoute = "$baseUrl/doc/";
 }

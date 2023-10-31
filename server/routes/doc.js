@@ -42,4 +42,37 @@ docRouter.get('/doc/my' , auth , async(req , res)=> {
     }
 
 });
+
+docRouter.post('/doc/update/title' ,auth , async (req, res)=>{
+
+    try{ 
+        
+        
+        const {id , title}= req.body;
+        const document = await Document.findByIdAndUpdate(id, {title});
+        res.json(document);        
+    }
+    catch(e){
+        res.status(500).json({
+            error: e.message + "Backend Error"
+        });
+
+    }
+
+});
+
+docRouter.get('/doc/:id' , auth , async(req , res)=> {
+    try{
+        const  document = await Document.findById(req.params.id);
+        res.json(document);
+
+
+    }catch(e){
+        res.status(500).json({
+            error: e.message + "Backend Error"
+        });
+
+    }
+
+});
 module.exports = docRouter; 

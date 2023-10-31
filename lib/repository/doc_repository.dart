@@ -95,4 +95,54 @@ class DocRepository {
     }
     return error;
   }
+
+  void updateTitle({
+    required String title,
+    required String token,
+    required String id,
+  }) async {
+    await _client.post(
+      Uri.parse(ApiRoutes().updateTitleRoute),
+      headers: {
+        "Content-Type": "application/json; charset=UTF-8",
+        "x-auth-token": token,
+      },
+      body: jsonEncode({
+        'title': title,
+        'id': id,
+      }),
+    );
+  }
+
+  Future<ErrorModel> getDocumentById(String token, String id) async {
+    ErrorModel error = ErrorModel(
+      error: 'Something Unexpected happened :< !',
+      data: null,
+    );
+    try {
+      var res = await _client.get(
+        Uri.parse("$baseUrl/doc/$id"),
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+          "x-auth-token": token,
+        },
+      );
+      switch (res.statusCode) {
+        case 200:
+          error = ErrorModel(
+            error: null,
+            data: DocumentModel.fromJson(res.body),
+          );
+          break;
+        default:
+          throw 'Doc DNE';
+      }
+    } catch (e) {
+      error = ErrorModel(
+        error: e.toString(),
+        data: null,
+      );
+    }
+    return error;
+  }
 }
