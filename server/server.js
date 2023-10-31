@@ -22,13 +22,14 @@ mongoose.connect(URL).then(() => {
 });
 //socket io part 
 io.on('connection' ,(socket)=> {
+   
     socket.on('join' , (documentId)=>{
         socket.join(documentId);
-        print('Joined');
+        console.log('Joined');
     });
     socket.on('typing' , (data)=> {
         socket.broadcast.to(data.room).emit('changes' , data);
-
+        
     })
 });
 
