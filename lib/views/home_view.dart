@@ -7,6 +7,8 @@ import 'package:paper/repository/auth_repository.dart';
 import 'package:paper/repository/doc_repository.dart';
 import 'package:routemaster/routemaster.dart';
 
+import '../common/theme/theme_provider.dart';
+
 class HomeView extends ConsumerWidget {
   const HomeView({super.key});
 
@@ -39,21 +41,17 @@ class HomeView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    var darkMode = ref.watch(darkModeProvider);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         actions: [
-          LiteRollingSwitch(
-            onTap: () {},
-            onDoubleTap: () {},
-            onSwipe: () {},
-            onChanged: (value) {},
-            textOn: 'Dark',
-            textOff: 'Light',
-            iconOn: Icons.nightlight,
-            iconOff: Icons.sunny,
-            width: 120,
-          ),
+          Switch(
+              value: darkMode,
+              onChanged: (val) {
+                ref.read(darkModeProvider.notifier).toggle();
+              }),
           IconButton(
             onPressed: () => createDocument(ref, context),
             icon: const Icon(Icons.add),

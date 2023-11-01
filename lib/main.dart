@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:paper/common/theme/theme_provider.dart';
 import 'package:paper/constants/routes.dart';
 import 'package:paper/models/error_model.dart';
 import 'package:paper/repository/auth_repository.dart';
@@ -35,10 +36,11 @@ class _MyAppState extends ConsumerState<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    var darkMode = ref.watch(darkModeProvider);
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
+      themeMode: darkMode ? ThemeMode.dark : ThemeMode.light,
       title: 'Paper App',
       routeInformationParser: const RoutemasterParser(),
       routerDelegate: RoutemasterDelegate(routesBuilder: (context) {
