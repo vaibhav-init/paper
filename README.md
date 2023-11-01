@@ -4,5 +4,6 @@ google docs like app
 **start from state persistence now user work done :) 
 
 Features: 
-1. delete a document after long press 
-2. 
+1. delete a document after long press  (done)
+2. reload the list after deleting . 
+3. 

@@ -5,7 +5,6 @@ import 'package:paper/models/document_model.dart';
 import 'package:paper/repository/auth_repository.dart';
 import 'package:paper/repository/doc_repository.dart';
 import 'package:routemaster/routemaster.dart';
-
 import '../common/theme/theme_provider.dart';
 
 class HomeView extends ConsumerWidget {
@@ -24,7 +23,7 @@ class HomeView extends ConsumerWidget {
         await ref.read(docRepositoryProvider).createDocument(token);
 
     if (errorModel.data != null) {
-      navigator.push('/document/${errorModel.data.id}');
+      navigator.replace('/document/${errorModel.data.id}');
     } else {
       snackbar.showSnackBar(
         SnackBar(
@@ -41,6 +40,9 @@ class HomeView extends ConsumerWidget {
 
     if (errorModel.data != null) {
       print("document deleted ");
+      //implement list refresh feature
+
+      //feature end
     } else {
       print('Kuch toh gadbad hai daya !');
     }

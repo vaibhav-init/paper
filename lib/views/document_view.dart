@@ -106,6 +106,7 @@ class _DocumentViewState extends ConsumerState<DocumentView> {
     }
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Row(
           children: [
             InkWell(
