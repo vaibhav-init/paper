@@ -7,3 +7,4 @@ Features:
 1. delete a document after long press  (done)
 2. reload the list after deleting . 
 3. delta -> pdf 
+4. color theme picking option 

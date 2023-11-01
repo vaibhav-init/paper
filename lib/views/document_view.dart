@@ -83,7 +83,7 @@ class _DocumentViewState extends ConsumerState<DocumentView> {
       //3-> local? we have typed ; remote
       if (event.source == ChangeSource.LOCAL) {
         Map<String, dynamic> map = {
-          'delta': event.change,
+          'delta': event.source,
           'room': widget.id,
         };
         socketRepository.typing(map);

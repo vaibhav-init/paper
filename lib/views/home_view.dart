@@ -59,6 +59,15 @@ class HomeView extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
+        title: const Text(
+          'Your Papers : ',
+          style: TextStyle(
+            fontFamily: 'Ubuntu',
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.deepPurple,
+          ),
+        ),
         backgroundColor: mainGreen,
         actions: [
           Switch(

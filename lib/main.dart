@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:paper/common/theme/theme.dart';
 import 'package:paper/common/theme/theme_provider.dart';
 import 'package:paper/constants/routes.dart';
 import 'package:paper/models/error_model.dart';
@@ -41,6 +42,10 @@ class _MyAppState extends ConsumerState<MyApp> {
     var darkMode = ref.watch(darkModeProvider);
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: mainGreen),
+        useMaterial3: true,
+      ),
       darkTheme: ThemeData.dark(),
       themeMode: darkMode ? ThemeMode.dark : ThemeMode.light,
       title: 'Paper App',
