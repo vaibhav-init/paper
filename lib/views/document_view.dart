@@ -16,7 +16,8 @@ import 'package:routemaster/routemaster.dart';
 
 class DocumentView extends ConsumerStatefulWidget {
   final String id;
-  DocumentView({
+  const DocumentView({
+    super.key,
     required this.id,
   });
 

@@ -68,7 +68,6 @@ class DocRepository {
         case 200:
           List<DocumentModel> documents = [];
           for (int i = 0; i < jsonDecode(res.body).length; i++) {
-            print(jsonDecode(res.body).length);
             documents.add(
               DocumentModel.fromJson(
                 jsonEncode(
