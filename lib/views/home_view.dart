@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:paper/common/widgets/loader.dart';
 import 'package:paper/models/document_model.dart';
 import 'package:paper/repository/auth_repository.dart';
@@ -42,6 +43,17 @@ class HomeView extends ConsumerWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         actions: [
+          LiteRollingSwitch(
+            onTap: () {},
+            onDoubleTap: () {},
+            onSwipe: () {},
+            onChanged: (value) {},
+            textOn: 'Dark',
+            textOff: 'Light',
+            iconOn: Icons.nightlight,
+            iconOff: Icons.sunny,
+            width: 120,
+          ),
           IconButton(
             onPressed: () => createDocument(ref, context),
             icon: const Icon(Icons.add),
