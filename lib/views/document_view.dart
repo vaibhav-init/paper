@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:paper/common/theme/theme.dart';
 import 'package:paper/common/widgets/loader.dart';
 import 'package:paper/constants/constants.dart';
 import 'package:paper/models/document_model.dart';
@@ -106,6 +107,7 @@ class _DocumentViewState extends ConsumerState<DocumentView> {
     }
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: mainGreen,
         automaticallyImplyLeading: false,
         title: Row(
           children: [
@@ -155,18 +157,23 @@ class _DocumentViewState extends ConsumerState<DocumentView> {
         configurations: QuillConfigurations(
           controller: _controller!,
           sharedConfigurations: const QuillSharedConfigurations(
-            locale: Locale('de'),
+            locale: Locale('en'),
           ),
         ),
         child: Column(
           children: [
-            const QuillToolbar(),
+            const QuillToolbar(
+              configurations: QuillToolbarConfigurations(),
+            ),
             Expanded(
-              child: Card(
-                elevation: 3,
-                child: QuillEditor.basic(
-                  configurations: const QuillEditorConfigurations(
-                    readOnly: false,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Card(
+                  elevation: 3,
+                  child: QuillEditor.basic(
+                    configurations: const QuillEditorConfigurations(
+                      readOnly: false,
+                    ),
                   ),
                 ),
               ),

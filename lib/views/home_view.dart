@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:paper/common/theme/theme.dart';
 import 'package:paper/common/widgets/loader.dart';
 import 'package:paper/models/document_model.dart';
 import 'package:paper/repository/auth_repository.dart';
@@ -58,17 +59,13 @@ class HomeView extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: mainGreen,
         actions: [
           Switch(
               value: darkMode,
               onChanged: (val) {
                 ref.read(darkModeProvider.notifier).toggle();
               }),
-          IconButton(
-            onPressed: () => createDocument(ref, context),
-            icon: const Icon(Icons.add),
-          ),
           IconButton(
             onPressed: () => signOut(ref),
             icon: const Icon(
@@ -86,31 +83,47 @@ class HomeView extends ConsumerWidget {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Loader();
             }
-            return ListView.builder(
-                itemCount: snapshot.data!.data.length,
-                itemBuilder: (context, index) {
-                  DocumentModel document = snapshot.data!.data[index];
-                  return InkWell(
-                    onTap: () => navigateToDocument(
-                      context,
-                      document.id,
-                    ),
-                    onLongPress: () {
-                      deleteDocument(ref, document.id);
-                    },
-                    child: Card(
-                      child: Center(
-                        child: Text(
-                          document.title,
-                          style: const TextStyle(
-                            fontSize: 20,
-                          ),
-                        ),
+            return GridView.builder(
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 200.0,
+                crossAxisSpacing: 10.0,
+                mainAxisSpacing: 20.0,
+                childAspectRatio: 0.8,
+              ),
+              itemCount: snapshot.data!.data.length,
+              itemBuilder: (context, index) {
+                DocumentModel document = snapshot.data!.data[index];
+                return InkWell(
+                  onTap: () => navigateToDocument(
+                    context,
+                    document.id,
+                  ),
+                  onLongPress: () {
+                    deleteDocument(ref, document.id);
+                  },
+                  child: Card(
+                    child: Text(
+                      document.title,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontFamily: 'Ubuntu',
                       ),
                     ),
-                  );
-                });
+                  ),
+                );
+              },
+            );
           }),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: mainGreen,
+        onPressed: () => createDocument(ref, context),
+        child: const Center(
+          child: Icon(
+            Icons.add,
+            size: 33,
+          ),
+        ),
+      ),
     );
   }
 }

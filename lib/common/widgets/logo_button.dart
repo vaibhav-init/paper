@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:paper/common/theme/theme.dart';
 
 class LogoButton extends StatelessWidget {
   final String icon;
@@ -17,7 +18,8 @@ class LogoButton extends StatelessWidget {
     return ElevatedButton.icon(
       onPressed: callback,
       style: ElevatedButton.styleFrom(
-        fixedSize: const Size(230, 30),
+        fixedSize: const Size(250, 50),
+        backgroundColor: mainGreen,
       ),
       icon: SvgPicture.asset(
         icon,

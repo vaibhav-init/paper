@@ -28,28 +28,12 @@ class LoginView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            LogoButton(
-              icon: AppIcons().googleIcon,
-              text: 'Google SignIn',
-              callback: () {
-                googleLogin(ref, context);
-              },
-            ),
-            LogoButton(
-              icon: AppIcons().githubIcon,
-              text: 'Github SignIn',
-              callback: () {},
-            ),
-            LogoButton(
-              icon: AppIcons().guestLogo,
-              text: 'LogIn as Guest',
-              callback: () {},
-            ),
-          ],
+        child: LogoButton(
+          icon: AppIcons().googleIcon,
+          text: 'Google SignIn',
+          callback: () {
+            googleLogin(ref, context);
+          },
         ),
       ),
     );

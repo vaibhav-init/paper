@@ -6,4 +6,4 @@ google docs like app
 Features: 
 1. delete a document after long press  (done)
 2. reload the list after deleting . 
-3. 
+3. delta -> pdf 
