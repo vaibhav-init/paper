@@ -75,4 +75,24 @@ docRouter.get('/doc/:id' , auth , async(req , res)=> {
     }
 
 });
+
+docRouter.delete('/delete/:id', auth, async (req, res) => {
+    try {
+      const documentId = req.params.id;
+      const deletedDocument = await Document.findByIdAndRemove(documentId);
+  
+      if (deletedDocument) {
+        console.log(`document with id : ${documentId} deleted`);
+        res.json({ message: 'Document deleted successfully' });
+      } else {
+        console.log('Nahi ho paya delete ');
+        res.status(404).json({ error: 'Document not found' });
+      }
+    } catch (e) {
+      res.status(500).json({
+        error: e.message + ' Backend Error',
+      });
+    }
+  });
+  
 module.exports = docRouter; 

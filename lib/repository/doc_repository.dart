@@ -144,4 +144,41 @@ class DocRepository {
     }
     return error;
   }
+
+  //delete feature :
+  Future<ErrorModel> deleteDocument(String token, String documentId) async {
+    ErrorModel error = ErrorModel(
+      error: 'Something Unexpected happened :< !',
+      data: null,
+    );
+    try {
+      var res = await _client.delete(
+        Uri.parse(ApiRoutes().deleteDocumentRoute + documentId),
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+          "x-auth-token": token,
+        },
+      );
+      switch (res.statusCode) {
+        case 200:
+          error = ErrorModel(
+            error: null,
+            data: 'Document deleted successfully',
+          );
+          break;
+        case 404:
+          error = ErrorModel(error: 'Document not found', data: null);
+          break;
+        default:
+          error = ErrorModel(error: res.body, data: null);
+          break;
+      }
+    } catch (e) {
+      error = ErrorModel(
+        error: e.toString(),
+        data: null,
+      );
+    }
+    return error;
+  }
 }

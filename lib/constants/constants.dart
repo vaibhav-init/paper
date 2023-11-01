@@ -17,4 +17,5 @@ class ApiRoutes {
   String getDocumentsRoute = "$baseUrl/doc/my";
   String updateTitleRoute = "$baseUrl/doc/update/title";
   String documentByIdRoute = "$baseUrl/doc/";
+  String deleteDocumentRoute = "$baseUrl/delete/";
 }

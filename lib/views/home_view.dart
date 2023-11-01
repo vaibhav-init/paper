@@ -34,8 +34,20 @@ class HomeView extends ConsumerWidget {
     }
   }
 
+  Future<void> deleteDocument(WidgetRef ref, String documentId) async {
+    String token = ref.read(userProvider)!.token;
+    final errorModel =
+        await ref.read(docRepositoryProvider).deleteDocument(token, documentId);
+
+    if (errorModel.data != null) {
+      print("document deleted ");
+    } else {
+      print('Kuch toh gadbad hai daya !');
+    }
+  }
+
   void navigateToDocument(BuildContext context, String documentId) {
-    Routemaster.of(context).push('/document/$documentId');
+    Routemaster.of(context).replace('/document/$documentId');
   }
 
   @override
@@ -81,6 +93,9 @@ class HomeView extends ConsumerWidget {
                       context,
                       document.id,
                     ),
+                    onLongPress: () {
+                      deleteDocument(ref, document.id);
+                    },
                     child: Card(
                       child: Center(
                         child: Text(
