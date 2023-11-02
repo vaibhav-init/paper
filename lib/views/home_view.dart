@@ -71,6 +71,9 @@ class HomeView extends ConsumerWidget {
         backgroundColor: mainGreen,
         actions: [
           Switch(
+              activeColor: Colors.black,
+              inactiveThumbColor: Colors.white,
+              inactiveTrackColor: Colors.white.withOpacity(0.5),
               value: darkMode,
               onChanged: (val) {
                 ref.read(darkModeProvider.notifier).toggle();

@@ -46,7 +46,7 @@ class _MyAppState extends ConsumerState<MyApp> {
         colorScheme: ColorScheme.fromSeed(seedColor: mainGreen),
         useMaterial3: true,
       ),
-      darkTheme: ThemeData.dark(),
+      darkTheme: ThemeData.dark().copyWith(useMaterial3: true),
       themeMode: darkMode ? ThemeMode.dark : ThemeMode.light,
       title: 'Paper App',
       routeInformationParser: const RoutemasterParser(),
