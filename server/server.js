@@ -5,8 +5,9 @@ const cors = require('cors');
 const docRouter = require('./routes/doc');
 const http = require('http');
 const Document = require("./models/doc_model");
+require('dotenv').config();
 
-const URL = "mongodb+srv://vaibhav:vaibhav@cluster0.uavseiu.mongodb.net/?retryWrites=true&w=majority";
+const URL = `${process.env.MONOGOOSE_CONNECTION_STRING}`;
 const app = express();
 
 app.use(express.json());
