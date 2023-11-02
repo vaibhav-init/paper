@@ -19,6 +19,7 @@ dependencies:
   flutter_quill: ^8.1.1
   socket_io_client: ^1.0.2
   lite_rolling_switch: ^1.0.1
+  lottie: ^2.7.0
 
 dev_dependencies:
   flutter_test:
@@ -32,6 +33,7 @@ flutter:
   assets:
     - assets/svgs/
     - assets/fonts/
+    - assets/animations/
 
   fonts:
     - family: Ubuntu
