@@ -1,16 +1,21 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:paper/common/theme/theme.dart';
-import 'package:paper/common/widgets/loader.dart';
-import 'package:paper/models/document_model.dart';
+import 'package:flutter/material.dart';
 import 'package:paper/repository/auth_repository.dart';
 import 'package:paper/repository/doc_repository.dart';
 import 'package:routemaster/routemaster.dart';
+import '../common/theme/theme.dart';
 import '../common/theme/theme_provider.dart';
+import '../common/widgets/loader.dart';
+import '../models/document_model.dart';
 
-class HomeView extends ConsumerWidget {
+class HomeView extends ConsumerStatefulWidget {
   const HomeView({super.key});
 
+  @override
+  ConsumerState createState() => _HomeViewState();
+}
+
+class _HomeViewState extends ConsumerState<HomeView> {
   void signOut(WidgetRef ref) {
     ref.read(authRepositoryProvider).signOut();
     ref.read(userProvider.notifier).update((state) => null);
@@ -48,7 +53,7 @@ class HomeView extends ConsumerWidget {
           content: Text('Document with id $documentId deleted :)'),
         ),
       );
-
+      setState(() {});
       //feature end
     } else {
       sMessenger.showSnackBar(
@@ -64,9 +69,8 @@ class HomeView extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     var darkMode = ref.watch(darkModeProvider);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text(
