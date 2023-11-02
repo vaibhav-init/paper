@@ -79,7 +79,7 @@ class _DocumentViewState extends ConsumerState<DocumentView> {
     _controller!.document.changes.listen((event) {
       if (event.source == ChangeSource.LOCAL) {
         Map<String, dynamic> map = {
-          'delta': event.source,
+          'delta': event.change,
           'room': widget.id,
         };
         socketRepository.typing(map);
