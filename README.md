@@ -44,5 +44,10 @@ lib/
 **Frontend**: Flutter
 
 **State Management**: Riverpod
-    
-## Feedback
+
+### Setting up Server 
+ <p> Go to sever folder or download the server folder from the release section </p>
+
+1. Create a .env file and make an environment variable named MONOGOOSE_CONNECTION_STRING with a value equal to the MongoDB connection string.
+2.  ``` npm i ```
+3. ``` node server.js ```
