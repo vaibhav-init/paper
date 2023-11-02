@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_quill/flutter_quill.dart';
@@ -78,9 +77,6 @@ class _DocumentViewState extends ConsumerState<DocumentView> {
       setState(() {});
     }
     _controller!.document.changes.listen((event) {
-      //1-> content
-      //2-> changes from previous part
-      //3-> local? we have typed ; remote
       if (event.source == ChangeSource.LOCAL) {
         Map<String, dynamic> map = {
           'delta': event.source,
@@ -139,15 +135,16 @@ class _DocumentViewState extends ConsumerState<DocumentView> {
         actions: [
           IconButton(
             onPressed: () {
-              Clipboard.setData(ClipboardData(
-                      text: 'http://localhost:3000/#/document/${widget.id}'))
-                  .then((value) => {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Link copied to clipboard'),
-                          ),
-                        ),
-                      });
+              Clipboard.setData(
+                ClipboardData(
+                    text: 'http://localhost:3000/#/document/${widget.id}'),
+              ).then((value) => {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Link copied to clipboard'),
+                      ),
+                    ),
+                  });
             },
             icon: const Icon(Icons.share),
           ),

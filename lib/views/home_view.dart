@@ -43,6 +43,11 @@ class HomeView extends ConsumerWidget {
 
     if (errorModel.data != null) {
       //implement list refresh feature
+      sMessenger.showSnackBar(
+        SnackBar(
+          content: Text('Document with id $documentId deleted :)'),
+        ),
+      );
 
       //feature end
     } else {
