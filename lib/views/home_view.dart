@@ -34,18 +34,23 @@ class HomeView extends ConsumerWidget {
     }
   }
 
-  Future<void> deleteDocument(WidgetRef ref, String documentId) async {
+  Future<void> deleteDocument(
+      WidgetRef ref, String documentId, BuildContext context) async {
     String token = ref.read(userProvider)!.token;
+    final sMessenger = ScaffoldMessenger.of(context);
     final errorModel =
         await ref.read(docRepositoryProvider).deleteDocument(token, documentId);
 
     if (errorModel.data != null) {
-      print("document deleted ");
       //implement list refresh feature
 
       //feature end
     } else {
-      print('Kuch toh gadbad hai daya !');
+      sMessenger.showSnackBar(
+        SnackBar(
+          content: Text(errorModel.error!),
+        ),
+      );
     }
   }
 
@@ -111,7 +116,7 @@ class HomeView extends ConsumerWidget {
                     document.id,
                   ),
                   onLongPress: () {
-                    deleteDocument(ref, document.id);
+                    deleteDocument(ref, document.id, context);
                   },
                   child: Card(
                     child: Text(
