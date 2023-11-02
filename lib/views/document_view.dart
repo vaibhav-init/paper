@@ -110,6 +110,7 @@ class _DocumentViewState extends ConsumerState<DocumentView> {
             InkWell(
               onTap: () {
                 Routemaster.of(context).replace('/');
+                setState(() {});
               },
               child: SvgPicture.asset(
                 AppIcons().documentLogo,
